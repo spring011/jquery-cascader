@@ -1,0 +1,17 @@
+.cascaderbox .hid{visibility: hidden;}
+.cascaderbox{height: 34px; line-height: 34px; position: relative}
+.cascaderbox .inputbox{width: 100%; height: 42px; position: relative;}
+.cascaderbox .searchtxt{display: inline-block; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis; color: #606266; width: 90%;}
+.cascaderbox .arrdown{float: right; display: inline; width: 12px; height: 12px; margin-right: 10px; margin-top: 15px;}
+.cascaderbox.open .arrdown{transform: rotate(180deg);}
+.cascaderbox .dlist{border-radius:4px;box-shadow:0px 0px 10px 0px rgba(0,0,0,0.1);position: absolute;left: 0;top: 48px; white-space: nowrap; background-color: #fff; border:1px solid #E4E6EB; height: 300px; overflow: hidden; z-index: 999;}
+.cascaderbox .dlist_ul{min-width: 160px; display: inline-block; border-right: 1px solid #E4E6EB;  padding:8px 10px; height: 300px; overflow: auto;}
+.cascaderbox .dlist_ul:last-child{border-right: 0 none;}
+.cascaderbox .item,.cascaderbox .item2{padding:4px 10px; line-height:22px; max-width: 250px;overflow:hidden; text-overflow: ellipsis; cursor: pointer;}
+.cascaderbox .dlist_search .item2{background: none; max-width: 350px;}
+.cascaderbox .item:hover,.cascaderbox .item.on{color: #409EFF;}
+.cascaderbox .item.lastchild{background: 0 none;}
+.cascaderbox .labelshow{position: absolute; left: 10px; top:0px; width: 90%; display: inline-block; height: 42px; color: #242A33; overflow: hidden; text-overflow: ellipsis;}
+.cascaderbox .searchdlist,.cascaderbox .searchdlist .dlist_ul{height: auto;max-height: 300px;}
+.cascaderbox .labelshow.hid{display: none;}
+.cascaderbox .nosearch{color: #c0c4cc; height: 30px;}

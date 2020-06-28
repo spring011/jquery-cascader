@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <!--禁止移动端缩放-->
+    <meta name="viewport"
+        content="minimal-ui, width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <!--"添加到主屏幕"后，全屏显示-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!--删除苹果工具栏和菜单栏-->
+    <meta name="apple-mobile-web-app-capable" content="no" />
+
+    <title>下拉级联</title>
+    <link rel="stylesheet" href="./cascader/jquery-cascader.css" />
+    <style>
+        #cascaderbox {
+            width: 360px;
+            margin: 12px;
+        }
+        #cascaderbox .searchtxt {
+            padding: 4px 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="main-container">
+        <div class="cascaderbox" id="cascaderbox">
+            <div class="inputbox">
+                <span class="arrdown"></span>
+                <input autocomplete="off" class="searchtxt form-control" type="text" placeholder="搜索或点击下拉选择">
+                <span class="labelshow"></span>
+            </div>
+            <div class="dlist hid"> </div>
+            <div class="dlist searchdlist hid"></div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <script src="./cascader/jquery-cascader.js"></script>
+    <script>
+        var data = [
+            { label: '山东省', value: '1', children: [{ label: "济南市", value: '2', children: [{ label: '历城区', value: '3' }] }] }
+        ]
+        $('#cascaderbox').cascader({
+            data: data
+        });
+    </script>
+
+</body>
+
+</html>

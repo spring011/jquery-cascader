@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <!--禁止移动端缩放-->
+    <meta name="viewport" content="minimal-ui, width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <!--"添加到主屏幕"后，全屏显示-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!--删除苹果工具栏和菜单栏-->
+    <meta name="apple-mobile-web-app-capable" content="no" />
+
+    <title>下拉级联</title>
+    <link rel="stylesheet" href="bower_components/select2/select2.css" />
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="bower_components/angular-busy/dist/angular-busy.min.css">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+    <link rel="stylesheet" href="bower_components/chosen/chosen.css">
+    <link rel="stylesheet" href="bower_components/open-sans-fontface/open-sans.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="bower_components/angularjs-datetime-picker/angularjs-datetime-picker.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
+    <link rel="stylesheet" href="bower_components/angular-timeline/dist/angular-timeline.css">
+    <link rel="stylesheet" href="bower_components/jquery.tipsy/css/jquery.tipsy.css" />
+    <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css" />
+    <link rel='stylesheet' href='bower_components/textAngular/dist/textAngular.css'>
+    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+
+    <link rel='stylesheet' href='bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css'>
+    <link rel='stylesheet' href='bower_components/ng-tags-input/ng-tags-input.min.css'>
+    <link rel='stylesheet' href='bower_components/angular-ui-select/dist/select.css'>
+
+    <link rel="image_src" href="bower_components/chosen/chosen-sprite.png">
+    <link rel="stylesheet/less" type="text/css" href="pipe-web.css?v=$VERSION" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+    <link rel="stylesheet" href="bower_components/editor.md/css/editormd.css" />
+    <link rel="stylesheet" href="bower_components/editor.md/css/editormd.preview.css" />
+
+</head>
+
+<body ng-controller="WholeViewCtrl">
+    <main-header></main-header>
+    <mobile-header></mobile-header>
+    <div id="main-container">
+        <mobile-side-menu></mobile-side-menu>
+        <side-menu-wrapper id="side-menu" cg-busy="{promise: busyLoading.promise , message: '数据加载中...'}"></side-menu-wrapper>
+        <div id="content-section">
+            <breadcrumb-wrapper id="breadcrumb"></breadcrumb-wrapper>
+            <div ng-view>
+            </div>
+            <div class='feedwindow' style='display:none;position: fixed;' cg-busy="{promise: Loading , message: '数据加载中...'}">
+                <span>问题描述：</span>
+                <textarea ng-model='feedtext'></textarea>
+                <button class='btn btn-primary' ng-click='submitfeed()'>确定</button>
+                <button class='btn btn-default' ng-click='cancelfeed()'>取消</button>
+            </div>
+            <!-- <div class="feedback-wrap">
+                <div class='feedback'>
+                    <div class="button-group">
+                        <button ng-click='handleAclModal()'>权限申请</button>
+                        <button ng-click='feedback()'>问题反馈</button>
+                        <div class="arrow"></div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="feedback-wrap" style="display: none;">
+                <div class="icon-box">
+                    <div class="icon-wrapper" ng-mouseover="getBtn(1)" ng-hide="showBtn === 1">
+                        <img src="assets/feedback-gery-icon.svg" alt="gery-feedback">
+                    </div>
+                    <button class="btn-wrapper" ng-show="showBtn === 1" ng-mouseleave="backIcon()" ng-click='feedback()'>
+                        <img src="assets/feedback-checked-icon.svg" alt="feedback-checked">
+                        问题反馈
+                    </button>
+                    <div class="icon-wrapper" ng-mouseover="getBtn(2)" ng-hide="showBtn === 2">
+                        <img src="assets/apply-gery-icon.svg" alt="gery-apply">
+                    </div>
+                    <button class="btn-wrapper" ng-show="showBtn === 2" ng-mouseleave="backIcon()" ng-click='handleAclModal()'>
+                        <img src="assets/apply-checked-icon.svg" alt="feedback-checked">
+                        权限申请
+                    </button>
+                    <div class="icon-wrapper" ng-mouseover="getBtn(3)" ng-hide="showBtn === 3">
+                        <img src="assets/data-req-gery-icon.svg" alt="gery-req">
+                    </div>
+                    <button class="btn-wrapper" ng-show="showBtn === 3" ng-mouseleave="backIcon()">
+                        <a href="https://oasis.zhenguanyu.com/#/requirements" target="_blank">
+                            <img src="assets/data-req-checked-icon.svg" alt="data-req-checked">
+                            数据需求
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/jquery.showLoading/js/jquery.showLoading.min.js"></script>
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts/highcharts-more.js"></script>
+    <script src="bower_components/highcharts/modules/map.js"></script>
+    <script src="bower_components/highcharts/modules/data.js"></script>
+    <script src="bower_components/cn-all-sar-taiwan/index.js"></script>
+    <script src="bower_components/echarts/dist/echarts.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/codemirror/lib/codemirror.js"></script>
+    <script src="bower_components/codemirror/mode/sql/sql.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-loader/angular-loader.min.js"></script>
+    <script src="bower_components/angular-busy/dist/angular-busy.min.js"></script>
+    <!--<script src="bower_components/select2/dist/js/select2.min.js"></script>-->
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.min.js"></script>
+    <script src="bower_components/angularjs-datetime-picker/angularjs-datetime-picker.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/ckeditor/ckeditor.js"></script>
+    <script src="bower_components/numeral/min/numeral.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/chosen/chosen.jquery.js"></script>
+    <script src="bower_components/angular-chosen/angular-chosen.min.js"></script>
+    <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/d3-timeline/src/d3-timeline.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/graphlib/dist/graphlib.core.js"></script>
+    <script src="bower_components/dagre/dist/dagre.core.js"></script>
+    <script src="bower_components/dagre-d3/dist/dagre-d3.core.js"></script>
+    <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+    <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
+    <script src="bower_components/angular-confirm-modal/angular-confirm.min.js"></script>
+    <script src="bower_components/less/dist/less.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
+    <script src="bower_components/angular-timeline/dist/angular-timeline.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/jquery.tipsy/js/jquery.tipsy.min.js"></script>
+    <script src="bower_components/angular-ui-sortable/sortable.js"></script>
+    <script src="bower_components/angular-css/angular-css.min.js"></script>
+    <script src="bower_components/ngSweetAlert/SweetAlert.min.js"></script>
+    <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="bower_components/bihisankey/bihisankey.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
+    <script src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+    <script src="bower_components/textAngular/dist/textAngular.min.js"></script>
+    <script src="bower_components/angular-popups/dist/angular-popups.js"></script>
+    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+
+    <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/select2/select2.min.js"></script>
+
+    <script src="bower_components/editor.md/editormd.js"></script>
+    <script src="bower_components/editor.md/lib/marked.min.js"></script>
+    <script src="bower_components/editor.md/lib/flowchart.min.js"></script>
+    <script src="bower_components/editor.md/lib/prettify.min.js"></script>
+    <script src="bower_components/editor.md/lib/raphael.min.js"></script>
+    <script src="bower_components/editor.md/lib/underscore.min.js"></script>
+    <script src="bower_components/editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="bower_components/editor.md/lib/flowchart.min.js"></script>
+    <script src="bower_components/clipboard/dist/clipboard.min.js"></script>
+    <script src="bower_components/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+    <script src="https://yfd1.fbcontent.cn/s/frog/frog-4.0.0.js"></script>
+    <script src="pipe-web.js?v=$VERSION"></script>
+</body>
+
+</html>
